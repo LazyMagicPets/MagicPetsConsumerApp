@@ -14,7 +14,7 @@ public class PetViewModel : LzItemViewModelAuthNotifications<Pet, PetModel>
     {
         _sessionViewModel = sessionViewModel;   
         ParentViewModel = parentViewModel;
-        _DTOReadAsync = sessionViewModel.Public.GetPetByIdAsync;
+        _DTOReadAsync = sessionViewModel.Public.PublicModuleGetPetByIdAsync;
     }
     private ISessionViewModel _sessionViewModel;
     public override string Id => Data?.Id ?? string.Empty;

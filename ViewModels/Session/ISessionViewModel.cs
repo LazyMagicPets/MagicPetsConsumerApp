@@ -1,9 +1,10 @@
 ﻿
+using BaseApp.ViewModels;
 using System.ComponentModel;
 
 namespace ViewModels;
 
-public interface ISessionViewModel : ILzSessionViewModelAuthNotifications
+public interface ISessionViewModel : IBaseAppSessionViewModelAuthNotifications
 {
     IConsumerApi Consumer { get; set; }
     IPublicApi Public { get; set; } 

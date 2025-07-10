@@ -1,4 +1,5 @@
-﻿using System.Reactive.Disposables;
+﻿using BaseApp.ViewModels;
+using System.Reactive.Disposables;
 namespace ViewModels;
 /// <summary>
 /// Manage user session. This is the root viewModel for the application. It is passed to and accessible 
@@ -6,12 +7,15 @@ namespace ViewModels;
 /// a singleton created by the DI container.
 /// Call the InitAsync() method before calling other methods in the class. 
 /// </summary>
-public class SessionsViewModel : LzSessionsViewModelAuthNotifications<ISessionViewModel>, ISessionsViewModel
+public class SessionsViewModel : BaseAppSessionsViewModeAuthNotifications<ISessionViewModel>, ISessionsViewModel
 {
     public SessionsViewModel(
-        ILoggerFactory loggerFactory,   
+        ILoggerFactory loggerFactory,
+        ITenantConfigViewModelFactory tenantConfigViewModelFactory,
+        IStaticAssets staticAssets,
+        IBaseAppJS baseAppJS,
         ISessionViewModelFactory sessionViewModelFactory
-        ) : base(loggerFactory)
+        ) : base(loggerFactory, tenantConfigViewModelFactory, staticAssets, baseAppJS)
     {
         _sessionViewModelFactory = sessionViewModelFactory;
     }
@@ -21,7 +25,7 @@ public class SessionsViewModel : LzSessionsViewModelAuthNotifications<ISessionVi
 
     public override ISessionViewModel CreateSessionViewModel()
     {
-        return _sessionViewModelFactory.Create();
+        return _sessionViewModelFactory.Create(this);
     }
 
 }

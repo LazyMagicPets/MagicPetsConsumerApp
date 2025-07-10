@@ -42,15 +42,10 @@ public static class MauiProgram
         builder.Logging.AddFilter("MudBlazor", LogLevel.Warning);  // Only show Warning and above for MudBlazor
 
         builder.Services
-            .AddSingleton<ILzMessages, LzMessages>()
-            .AddSingleton<ILzClientConfig, LzClientConfig>()
             .AddSingleton(sp => new HttpClient())
             .AddSingleton<IStaticAssets>(sp => new BlazorStaticAssets(
                 sp.GetRequiredService<ILoggerFactory>(),
                 new HttpClient { BaseAddress = new Uri((string)_appConfig!["assetsUrl"]!) }))
-            .AddSingleton<BlazorInternetConnectivity>()
-            .AddSingleton<IBlazorInternetConnectivity>(sp => sp.GetRequiredService<BlazorInternetConnectivity>())
-            .AddSingleton<IInternetConnectivitySvc>(sp => sp.GetRequiredService<BlazorInternetConnectivity>())
             .AddSingleton<ILzHost>(sp => new LzHost(
                 appPath: (string)_appConfig!["appPath"]!, // app path
                 appUrl: (string)_appConfig!["appUrl"]!, // app url  
@@ -62,8 +57,6 @@ public static class MauiProgram
                 isAndroid: isAndroid,
                 isLocal: isLocal,
                 useLocalhostApi: (bool)_appConfig!["useLocalHostApi"]!))
-            .AddSingleton<IOSAccess, BlazorOSAccess>()
-            .AddSingleton<IBaseAppJS, BaseAppJS>()
             .AddMauiBlazorWebView();
 
 #if DEBUG

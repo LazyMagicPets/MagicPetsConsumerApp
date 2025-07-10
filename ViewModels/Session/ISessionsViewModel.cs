@@ -1,6 +1,11 @@
-﻿namespace ViewModels;
+﻿using BaseApp.ViewModels;
 
-public interface ISessionsViewModel : ILzSessionsViewModelAuthNotifications<ISessionViewModel> {
-    public JObject TenancyConfig { get; set; }
+namespace ViewModels;
+
+/// <summary>
+/// Placeholder, SnapsApp does not support logins so there is only ever one session.
+/// </summary>
+public interface ISessionsViewModel :
+    IBaseAppSessionsViewModelAuthNotifications<ISessionViewModel>
+{
 }
-

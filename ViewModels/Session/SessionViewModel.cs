@@ -19,7 +19,8 @@ public class SessionViewModel : LzSessionViewModelAuthNotifications, ISessionVie
         [FactoryInject] IAuthProcess authProcess, // transient
         [FactoryInject] IPetsViewModelFactory petsViewModelFactory, // transient
         [FactoryInject] ICategoriesViewModelFactory categoriesViewModelFactory, // transient
-        [FactoryInject] ITagsViewModelFactory tagsViewModelFactory // transient
+        [FactoryInject] ITagsViewModelFactory tagsViewModelFactory, // transient
+        ISessionsViewModel sessionsViewModel
         )
         : base(loggerFactory, authProcess, clientConfig, internetConnectivity, messages)  
     {

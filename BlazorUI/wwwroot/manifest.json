@@ -1,7 +1,7 @@
 {
   "name": "MagicPets App",
   "short_name": "MagicPets App",
-  "id": "/store/",
+  "id": "/consumer/",
   "start_url": "/app/",
   "display": "standalone",
   "background_color": "#ffffff",
