@@ -1,4 +1,5 @@
-﻿global using LazyMagic.Client.Auth;
+﻿global using BaseApp.ViewModels;
+global using LazyMagic.Client.Auth;
 global using LazyMagic.Client.Base;
 global using LazyMagic.Client.ViewModels;
 global using Microsoft.Extensions.DependencyInjection;
@@ -8,5 +9,7 @@ global using Newtonsoft.Json.Linq;
 global using SharedSchema;
 global using System.ComponentModel;
 global using ConsumerApi;
-global using PublicApi;
 global using System.Reflection;
+global using ConsumerModule;
+global using PublicModule;
+global using StoreModule;

@@ -1,7 +1,7 @@
 ﻿@namespace BlazorUI
 @page "/PetsPage"
 @inherits LzComponentBaseAssignViewModel<PetsViewModel>
-@inject ISessionsViewModel SessionsViewModel
+@inject ICurrentSessionViewModel CurrentSessionViewModel
 @inject NavigationManager NavigationManager
 
 <h3>PetsPage</h3>
@@ -11,33 +11,11 @@
 }
 else
 {
-    <MudCard>
-        <MudCardContent>
-            <MudTable T="PetModel"
-            Items="@ViewModel.ViewModels.Values.Select(x => x.Data)">
-                <HeaderContent>
-                    <MudTh>Actions</MudTh>
-                    <MudTh>Status</MudTh>
-                    <MudTh>Name</MudTh>
-                    <MudTh>Category</MudTh>
-                    <MudTh>Tags</MudTh>
-
-                </HeaderContent>
-
-                <RowTemplate>
-                    <MudTh>@context.PetStatus</MudTh>
-                    <MudTd DataLabel="Name">@context.Name</MudTd>
-                    <MudTd DataLabel="Category">@context.Category</MudTd>
-                    <MudTd DataLabel="Tags">@(string.Join(",", context.Tags ?? [""]))</MudTd>
-                </RowTemplate>
-
-            </MudTable>
-
-        </MudCardContent>
-        <MudCardActions>
-            <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="PetsReloadAsync">Reload</MudButton>
-        </MudCardActions>
-    </MudCard>
+    @if (CurrentSessionViewModel!.IsSignedIn)
+    {
+        <PetsList ViewModel="@ViewModel"
+                  OnPetsReload="PetsReload" />
+    }
 }
 @code {
     [Inject] ISnackbar? Snackbar { get; set; }
@@ -46,7 +24,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        ViewModel = SessionsViewModel!.SessionViewModel!.PetsViewModel;
+        ViewModel = CurrentSessionViewModel!.PetsViewModel;
         ViewModel.Clear();
         var (success, msg) = await ViewModel!.ReadAsync();
         if (!success)
@@ -56,29 +34,7 @@ else
         await base.OnInitializedAsync();
     }
 
-    private void AddPet()
-    {
-        ViewModel!.EditViewModel = null; // ensure a new PetViewModel is created
-        NavigationManager.NavigateTo("PetEditPage");
-    }
-
-    private void EditPet(PetModel petModel)
-    {
-        var viewModel = ViewModel!.CurrentViewModel = ViewModel!.EditViewModel = ViewModel.ViewModels[petModel.Id];
-        NavigationManager.NavigateTo("PetEditPage");
-    }
-
-    private async Task DeletePet(PetModel petModel)
-    {
-        var viewModel = ViewModel!.ViewModels[petModel.Id];
-        var (success, msg) = await viewModel.DeleteAsync();
-        if (!success)
-        {
-            Snackbar!.Add(msg, MudBlazor.Severity.Error);
-        }
-    }
-
-    private async Task PetsReloadAsync()
+    private async Task PetsReload()
     {
         var (success, msg) = await ViewModel!.ReadAsync();
         if (!success)
