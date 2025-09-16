@@ -1,7 +1,7 @@
 ﻿@namespace BlazorUI
 @page "/PetsPage"
 @inherits LzComponentBaseAssignViewModel<PetsViewModel>
-@inject ICurrentSessionViewModel CurrentSessionViewModel
+@inject ISessionViewModel CurrentSessionViewModel
 @inject NavigationManager NavigationManager
 
 <h3>PetsPage</h3>
@@ -11,11 +11,8 @@
 }
 else
 {
-    @if (CurrentSessionViewModel!.IsSignedIn)
-    {
-        <PetsList ViewModel="@ViewModel"
-                  OnPetsReload="PetsReload" />
-    }
+    <PetsList ViewModel="@ViewModel"
+                OnPetsReload="PetsReload" />
 }
 @code {
     [Inject] ISnackbar? Snackbar { get; set; }
