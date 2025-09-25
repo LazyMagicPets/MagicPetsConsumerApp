@@ -1,5 +1,4 @@
-﻿using Amazon;
-using LazyMagic.Client.FactoryGenerator; // do not put in global using. Causes runtime error.
+﻿using LazyMagic.Client.FactoryGenerator; // do not put in global using. Causes runtime error.
 
 namespace ViewModels;
 /// <summary>
@@ -8,39 +7,25 @@ namespace ViewModels;
 /// the data (in this case the PetsViewMode).
 /// </summary>Dep
 [Factory]
-public class SessionViewModel : LzSessionViewModelAuthNotifications, ISessionViewModel
+public class SessionViewModel : BaseAppSessionViewModel, ISessionViewModel
 {
     public SessionViewModel(
         [FactoryInject] ILoggerFactory loggerFactory, // singleton
         [FactoryInject] ILzClientConfig clientConfig, // singleton
-        [FactoryInject] IInternetConnectivitySvc internetConnectivity, // singleton
+        [FactoryInject] IConnectivityService connectivityService, // singleton
         [FactoryInject] ILzHost lzHost, // singleton
         [FactoryInject] ILzMessages messages, // singleton
-        [FactoryInject] IAuthProcess authProcess, // transient
         [FactoryInject] IPetsViewModelFactory petsViewModelFactory, // transient
         [FactoryInject] ICategoriesViewModelFactory categoriesViewModelFactory, // transient
         [FactoryInject] ITagsViewModelFactory tagsViewModelFactory // transient
+
         )
-        : base(loggerFactory, authProcess, clientConfig, internetConnectivity, messages)  
+        : base(loggerFactory, connectivityService, messages,
+                petsViewModelFactory, categoriesViewModelFactory, tagsViewModelFactory)  
     {
         try
         {
-            var tenantKey = (string?)clientConfig.TenancyConfig["tenantKey"] ?? "";
             TenantName = AppConfig.TenantName;
-            authProcess.SetAuthenticator(clientConfig.AuthConfigs?["ConsumerAuth"]!);
-            authProcess.SetSignUpAllowed(true);
-
-            var sessionId = Guid.NewGuid().ToString(); 
-
-            Consumer = new ConsumerApi.ConsumerApi(new LzHttpClient(loggerFactory, authProcess.AuthProvider, lzHost, sessionId));
-
-            Public = new PublicApi.PublicApi(new LzHttpClient(loggerFactory, null, lzHost, sessionId));
-
-            PetsViewModel = petsViewModelFactory?.Create(this) ?? throw new ArgumentNullException(nameof(petsViewModelFactory));
-
-            CategoriesViewModel = categoriesViewModelFactory?.Create(this) ?? throw new ArgumentNullException(nameof(categoriesViewModelFactory));
-
-            TagsViewModel = tagsViewModelFactory?.Create(this) ?? throw new ArgumentNullException(nameof(tagsViewModelFactory));
 
         }
         catch (Exception ex)
@@ -49,12 +34,6 @@ public class SessionViewModel : LzSessionViewModelAuthNotifications, ISessionVie
             throw new Exception("oops");
         }
     }
-    public IConsumerApi Consumer { get; set; }
-    public IPublicApi Public { get; set; }  
-
-    public PetsViewModel PetsViewModel { get; set; }
-    public CategoriesViewModel CategoriesViewModel { get; set; }
-    public TagsViewModel TagsViewModel { get; set; }
     public string TenantName { get; set; } = string.Empty;
 
     // Base class calls UnloadAsync () when IsSignedIn changes to false
