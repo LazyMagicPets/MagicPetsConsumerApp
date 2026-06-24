@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="$(MSBuildProjectDirectory)/../Solution.Build.props"/>
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<DebugType>portable</DebugType>
@@ -16,13 +16,13 @@
 		<PackageReference Include="LazyMagic.Client.FactoryGenerator" />
 		<PackageReference Include="LazyMagic.Client.ModelGenerator" />
 		<PackageReference Include="LazyMagic.OIDC.Base" />
-		<PackageReference Include="ReactiveUI.Fody" />
+		<PackageReference Include="ReactiveUI.SourceGenerators" PrivateAssets="all" />
 		<PackageReference Include="ReactiveUI" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="BaseApp.ViewModels" />
-		<PackageReference Include="ConsumerApi" />
+		<PackageReference Include="AppApi" />
 	</ItemGroup>
 
 </Project>

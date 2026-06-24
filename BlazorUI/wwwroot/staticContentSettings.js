@@ -1,26 +1,26 @@
 export const settings = {
     staticAssets: [
-        // System
-        { "system/base/System/": "PreCache" },
-        { "system/en-US/System/": "PreCache" },
-        { "system/es-MX/System/": "LazyCache" },
+        // System (shared across all subtenants)
+        { path: "system/base/System/", cacheType: "PreCache", shared: true },
+        { path: "system/en-US/System/", cacheType: "PreCache", shared: true },
+        { path: "system/es-MX/System/", cacheType: "LazyCache", shared: true },
 
-        // StoreApp
-        { "system/base/ConsumerApp/": "PreCache" },
-        { "system/en-US/ConsumerApp/": "PreCache" },
-        { "system/es-MX/ConsumerApp/": "LazyCache" },
+        // ConsumerApp (shared across all subtenants)
+        { path: "system/base/ConsumerApp/", cacheType: "PreCache", shared: true },
+        { path: "system/en-US/ConsumerApp/", cacheType: "PreCache", shared: true },
+        { path: "system/es-MX/ConsumerApp/", cacheType: "LazyCache", shared: true },
 
-        // Tenancy
-        { "tenancy/base/System/": "PreCache" },
-        { "tenancy/base/ConsumerApp/": "PreCache" },
-        { "tenancy/en-US/ConsumerApp/": "PreCache" },
-        { "tenancy/es-MX/ConsumerApp/": "LazyCache" },
+        // Tenancy (shared across all subtenants within tenant)
+        { path: "tenancy/base/System/", cacheType: "PreCache", shared: true },
+        { path: "tenancy/base/ConsumerApp/", cacheType: "PreCache", shared: true },
+        { path: "tenancy/en-US/ConsumerApp/", cacheType: "PreCache", shared: true },
+        { path: "tenancy/es-MX/ConsumerApp/", cacheType: "LazyCache", shared: true },
 
-        // Subtenancy
-        { "subtenancy/base/System/": "PreCache" },
-        { "subtenancy/base/ConsumerApp/": "PreCache" },
-        { "subtenancy/en-US/ConsumerApp/": "PreCache" },
-        { "subtenancy/es-MX/ConsumerApp/": "LazyCache" },
+        // Subtenancy (subtenant-specific, requires cache swapping)
+        { path: "subtenancy/base/System/", cacheType: "PreCache", shared: false },
+        { path: "subtenancy/base/ConsumerApp/", cacheType: "PreCache", shared: false },
+        { path: "subtenancy/en-US/ConsumerApp/", cacheType: "PreCache", shared: false },
+        { path: "subtenancy/es-MX/ConsumerApp/", cacheType: "LazyCache", shared: false },
 
     ]
 };

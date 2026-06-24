@@ -8,6 +8,6 @@ global using Microsoft.Extensions.Logging;
 
 
 // Application Specific
-global using ConsumerApi;
+global using AppApi;
 global using ConsumerModule;
 global using PublicModule;
