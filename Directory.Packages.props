@@ -16,8 +16,8 @@
 		<PackageVersion Include="MSTest.TestAdapter" Version="3.1.2" />
 		<PackageVersion Include="MSTest.TestFramework" Version="3.1.2" />
 		<PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageVersion Include="ReactiveUI" Version="23.2.19" />
-		<PackageVersion Include="ReactiveUI.Blazor" Version="23.2.19" />
+		<PackageVersion Include="ReactiveUI" Version="23.2.28" />
+		<PackageVersion Include="ReactiveUI.Blazor" Version="23.2.28" />
 		<PackageVersion Include="ReactiveUI.SourceGenerators" Version="2.6.1" />
 	</ItemGroup>
 	<ItemGroup>
@@ -25,24 +25,52 @@
 		<PackageVersion Include="MudBlazor" Version="9.4.0" />
 		<PackageVersion Include="BlazorPro.BlazorSize" Version="9.0.0" />
 	</ItemGroup>
+	<!--
+		LOCAL LANE. Each first-party pin below reads a property whose DEFAULT is the version this
+		repo is committed against; `lz packages mode local` writes the override imported underneath
+		and redirects them at whatever the workspace feeds hold.
+
+		THE IMPORT MUST STAY BELOW THESE DEFAULTS - above them the defaults win silently.
+
+		NOT bracketed, unlike Service and BaseAppLib: this repo packs nothing, so no dependency
+		range of its own is ever published. See Platform/LzPackageLaneMigration.md.
+	-->
+	<PropertyGroup>
+		<PkgVer_LazyMagic_Blazor>3.0.17</PkgVer_LazyMagic_Blazor>
+		<PkgVer_LazyMagic_Client_FactoryGenerator>3.0.17</PkgVer_LazyMagic_Client_FactoryGenerator>
+		<PkgVer_LazyMagic_Client_ModelGenerator>3.0.17</PkgVer_LazyMagic_Client_ModelGenerator>
+		<PkgVer_LazyMagic_Client_ViewModels>3.0.17</PkgVer_LazyMagic_Client_ViewModels>
+		<PkgVer_LazyMagic_MudBlazor>3.0.17</PkgVer_LazyMagic_MudBlazor>
+		<PkgVer_LazyMagic_OIDC_Base>3.0.17</PkgVer_LazyMagic_OIDC_Base>
+		<PkgVer_LazyMagic_OIDC_MAUI>3.0.17</PkgVer_LazyMagic_OIDC_MAUI>
+		<PkgVer_LazyMagic_OIDC_WASM>3.0.17</PkgVer_LazyMagic_OIDC_WASM>
+		<PkgVer_LazyMagic_OIDC_WASM_Bff>3.0.17</PkgVer_LazyMagic_OIDC_WASM_Bff>
+		<PkgVer_LazyMagic_Shared>3.0.17</PkgVer_LazyMagic_Shared>
+		<PkgVer_AppApi>1.0.0</PkgVer_AppApi>
+		<PkgVer_BaseApp_BlazorUI>1.0.1</PkgVer_BaseApp_BlazorUI>
+		<PkgVer_BaseApp_ViewModels>1.0.1</PkgVer_BaseApp_ViewModels>
+		<PkgVer_ConsumerModuleClientInterface>1.0.0</PkgVer_ConsumerModuleClientInterface>
+		<PkgVer_PublicModuleClientInterface>1.0.0</PkgVer_PublicModuleClientInterface>
+	</PropertyGroup>
+	<Import Project="$(MSBuildThisFileDirectory)../../Packages.Local.props" Condition="Exists('$(MSBuildThisFileDirectory)../../Packages.Local.props')" />
 	<ItemGroup>
 		<!-- LazyMagic Package References -->
-		<PackageVersion Include="LazyMagic.Blazor" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.Client.FactoryGenerator" Version="3.0.17"/>
-		<PackageVersion Include="LazyMagic.Client.ModelGenerator" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.MudBlazor" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.Client.ViewModels" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.OIDC.Base" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.OIDC.WASM" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.OIDC.WASM.Bff" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.OIDC.MAUI" Version="3.0.17" />
-		<PackageVersion Include="LazyMagic.Shared" Version="3.0.17" />
+		<PackageVersion Include="LazyMagic.Blazor" Version="$(PkgVer_LazyMagic_Blazor)" />
+		<PackageVersion Include="LazyMagic.Client.FactoryGenerator" Version="$(PkgVer_LazyMagic_Client_FactoryGenerator)"/>
+		<PackageVersion Include="LazyMagic.Client.ModelGenerator" Version="$(PkgVer_LazyMagic_Client_ModelGenerator)" />
+		<PackageVersion Include="LazyMagic.MudBlazor" Version="$(PkgVer_LazyMagic_MudBlazor)" />
+		<PackageVersion Include="LazyMagic.Client.ViewModels" Version="$(PkgVer_LazyMagic_Client_ViewModels)" />
+		<PackageVersion Include="LazyMagic.OIDC.Base" Version="$(PkgVer_LazyMagic_OIDC_Base)" />
+		<PackageVersion Include="LazyMagic.OIDC.WASM" Version="$(PkgVer_LazyMagic_OIDC_WASM)" />
+		<PackageVersion Include="LazyMagic.OIDC.WASM.Bff" Version="$(PkgVer_LazyMagic_OIDC_WASM_Bff)" />
+		<PackageVersion Include="LazyMagic.OIDC.MAUI" Version="$(PkgVer_LazyMagic_OIDC_MAUI)" />
+		<PackageVersion Include="LazyMagic.Shared" Version="$(PkgVer_LazyMagic_Shared)" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageVersion Include="BaseApp.ViewModels" Version="1.0.1" />
-		<PackageVersion Include="BaseApp.BlazorUI" Version="1.0.1" />
-		<PackageVersion Include="PublicModuleClientInterface" Version="1.0.0" />
-		<PackageVersion Include="ConsumerModuleClientInterface" Version="1.0.0" />
-		<PackageVersion Include="AppApi" Version="1.0.0" />
+		<PackageVersion Include="BaseApp.ViewModels" Version="$(PkgVer_BaseApp_ViewModels)" />
+		<PackageVersion Include="BaseApp.BlazorUI" Version="$(PkgVer_BaseApp_BlazorUI)" />
+		<PackageVersion Include="PublicModuleClientInterface" Version="$(PkgVer_PublicModuleClientInterface)" />
+		<PackageVersion Include="ConsumerModuleClientInterface" Version="$(PkgVer_ConsumerModuleClientInterface)" />
+		<PackageVersion Include="AppApi" Version="$(PkgVer_AppApi)" />
 	</ItemGroup>
 </Project>
