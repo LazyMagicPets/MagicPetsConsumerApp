@@ -367,3 +367,6 @@ config.dev.json
 config.test.json
 config.prod.json
 wwwroot/config.json
+
+# MSBuild diagnostic output, never a source file
+detailedbuild.txt
